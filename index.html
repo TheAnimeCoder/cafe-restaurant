@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café & Restaurant Delight | Home</title>
+    <!-- Primary Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Slider Stylesheet -->
+    <link rel="stylesheet" href="Slider2.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80">
+    <style>
+        /* Critical header override for this page */
+        header, 
+        header#header, 
+        body > header, 
+        .header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+        }
+        body {
+            padding-top: 80px !important;
+        }
+    </style>
+</head>
+<body class="cafe-mode">
+    <!-- Global Header -->
+    <header>
+        <nav>
+            <div class="logo" id="brand-logo">Café Delight</div>
+            <div class="nav-controls">
+                <div class="mode-switcher">
+                    <input type="checkbox" id="mode-toggle">
+                    <label for="mode-toggle" class="mode-toggle-label">
+                        <span class="cafe-label">Café</span>
+                        <span class="toggle-slider"></span>
+                        <span class="restaurant-label">Restaurant</span>
+                    </label>
+                </div>
+            <div class="search-container">
+                <div class="search-wrapper">
+                        <input type="text" id="menu-search" placeholder="Search menu..." class="search-input">
+                        <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="order.html">Order Online</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+               
+            </ul>
+            <div class="mobile-menu-toggle" aria-label="Toggle mobile menu" role="button" tabindex="0">
+                <!-- The script.js will replace this with the hamburger icon structure -->
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-background">
+            <video autoplay muted loop playsinline id="hero-video" class="cafe-video">
+                <source src="cafe-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="restaurant-video" id="restaurant-video">
+                <video autoplay muted loop playsinline>
+                    <source src="restrovideo.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="hero-content" id="cafe-hero-content">
+            <h1>Café Delight<span>Cozy Atmosphere & Premium Coffee</span></h1>
+            <p>Indulge in our premium coffees, fresh pastries, and light meals in a warm, inviting atmosphere perfect for relaxation, work, or catching up with friends.</p>
+            <div class="cta-buttons">
+                <a href="reservation.html" class="btn primary">Reserve a Table</a>
+                <a href="order.html" class="btn secondary">Order Online</a>
+            </div>
+        </div>
+        <div class="hero-content" id="restaurant-hero-content">
+            <h1>Restaurant Elegance<span>Fine Dining & Culinary Excellence</span></h1>
+            <p>Experience an exquisite culinary journey where timeless elegance meets innovative gastronomy, creating unforgettable moments of flavor and artistry.</p>
+            <div class="cta-buttons">
+                <a href="reservation.html" class="btn primary">Reserve a Table</a>
+                <a href="order.html" class="btn secondary">Order Online</a>
+            </div>
+        </div>
+        <a href="#photo-gallery" class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Ambience Section -->
+    <section id="photo-gallery" class="section">
+        <h2>Our Ambience</h2>
+        <div class="banner">
+            <div class="slider">
+                <figure class="slider-item active">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Elegant dining area">
+                    <div class="description-container">
+                        <h3>Elegant Dining Area</h3>
+                        <p>Experience fine dining in our sophisticated main hall</p>
+                    </div>
+                </figure>
+                <figure class="slider-item">
+                    <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Cozy cafe corner">
+                    <div class="description-container">
+                        <h3>Cozy Café Corner</h3>
+                        <p>Perfect spot for your morning coffee and pastries</p>
+                    </div>
+                </figure>
+                <figure class="slider-item">
+                    <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Private dining">
+                    <div class="description-container">
+                        <h3>Private Dining</h3>
+                        <p>Intimate spaces for special occasions</p>
+                    </div>
+                </figure>
+                <figure class="slider-item">
+                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Bar area">
+                    <div class="description-container">
+                        <h3>Sophisticated Bar</h3>
+                        <p>Expertly crafted cocktails in an elegant setting</p>
+                    </div>
+                </figure>
+                <div class="slider-nav">
+                    <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="featured-dishes" class="section-padding">
+        <div class="container">
+            <div class="section-header text-center animate-on-scroll" data-animation="fade-up">
+                <h2 class="section-title">Our Selections</h2>
+                <p class="section-subtitle">Crafted with care, served with passion</p>
+            </div>
+            
+            <div class="featured-tabs">
+                <div class="tab-buttons text-center animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    <button class="tab-btn active" data-target="cafe">Café Favorites</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="cafe">
+        <div class="card-container">
+                            <div class="hover-card animate-on-scroll" data-animation="slide-up" data-delay="150">
+                <div class="card-content">
+                                    <h3>Coffee Selections</h3>
+                                    <p>Our baristas craft each cup with precision and passion, using ethically sourced beans from around the world.</p>
+                                    <ul>
+                                        <li>Specialty Pour Overs</li>
+                                        <li>Signature Espresso Drinks</li>
+                                        <li>Cold Brew Creations</li>
+                    </ul>
+                                    <a href="menu.html" class="btn-outline">View Menu</a>
+                </div>
+            </div>
+                            
+                            <div class="hover-card animate-on-scroll" data-animation="slide-up" data-delay="250">
+                <div class="card-content">
+                                    <h3>Artisan Pastries</h3>
+                                    <p>Freshly baked daily in our kitchen, our pastries are made with the finest ingredients and traditional techniques.</p>
+                                    <ul>
+                                        <li>Flaky Croissants</li>
+                                        <li>Seasonal Fruit Tarts</li>
+                                        <li>Decadent Chocolate Creations</li>
+                    </ul>
+                                    <a href="menu.html" class="btn-outline">View Menu</a>
+                </div>
+            </div>
+                            
+                            <div class="hover-card animate-on-scroll" data-animation="slide-up" data-delay="350">
+                <div class="card-content">
+                                    <h3>Light Meals</h3>
+                                    <p>Perfect for a quick lunch or leisurely afternoon, our café offerings are fresh, flavorful and satisfying.</p>
+                                    <ul>
+                                        <li>Gourmet Sandwiches</li>
+                                        <li>Seasonal Salads</li>
+                                        <li>Homemade Soups</li>
+                    </ul>
+                                    <a href="menu.html" class="btn-outline">View Menu</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 id="footer-title">Café Delight</h4>
+                <p>123 Cafe Street</p>
+                <p>City, State 12345</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <div id="cafe-hours">
+                    <p>Monday - Friday: 7am - 8pm</p>
+                    <p>Saturday - Sunday: 8am - 9pm</p>
+                </div>
+                <div id="restaurant-hours" style="display: none;">
+                    <p>Monday - Friday: 11am - 10pm</p>
+                    <p>Saturday - Sunday: 10am - 11pm</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get special offers and event updates</p>
+                <form class="footer-subscribe">
+                    <div class="subscribe-container">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Café & Restaurant Delight. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+    <!-- Ambience Slider Script -->
+    <script src="js/ambience-slider.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+This is a placeholder file. To get your 3D models working, you need to download actual GLB files.
+
+Here are some sample 3D models you can download:
+
+1. Chocolate Lava Cake:
+   https://sketchfab.com/3d-models/chocolate-lava-cake-4k-pbr-8a9c8c5c5c5c5c5c5c5c5c5c5c5c5c5c
+
+2. Tiramisu:
+   https://sketchfab.com/3d-models/tiramisu-dessert-4k-pbr-8a9c8c5c5c5c5c5c5c5c5c5c5c5c5c5c
+
+3. Crème Brûlée:
+   https://sketchfab.com/3d-models/creme-brulee-dessert-4k-pbr-8a9c8c5c5c5c5c5c5c5c5c5c5c5c5c5c
+
+4. Ice Cream:
+   https://sketchfab.com/3d-models/ice-cream-sundae-4k-pbr-8a9c8c5c5c5c5c5c5c5c5c5c5c5c5c5c
+
+Note: The links above are examples and may not work. You'll need to find actual 3D models on sites like Sketchfab, TurboSquid, or create your own.
+
+After downloading, rename the files to match the filenames in your HTML:
+- chocolate-lava-cake.glb
+- tiramisu.glb
+- creme-brulee.glb
+- ice-cream.glb 

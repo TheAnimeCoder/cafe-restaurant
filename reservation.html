@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation | Café Delight</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="elegant-theme.css">
+    <link rel="stylesheet" href="dish-slider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <style>
+        /* Floor Plan Hover Effects */
+        .table-item-3d {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .table-item-3d:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .table-item-3d:hover .table-shape {
+            background-color: rgba(249, 185, 73, 0.7);
+        }
+        
+        .table-item-3d:hover .table-info {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+        
+        .table-item-3d:hover .chair {
+            transform: translateY(-2px);
+            background-color: rgba(217, 78, 78, 0.8);
+        }
+        
+        .table-info {
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .chair {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        /* Hover effects for different areas */
+        .bar-stool.hovering {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .bar-stool.hovering:hover {
+            transform: translateY(-5px);
+        }
+        
+        .bar-stool.hovering:hover .stool-seat {
+            background-color: #f9b949;
+        }
+        
+        /* Gate door hover effect */
+        .gate-door {
+            transition: transform 0.3s ease;
+        }
+        
+        .gate-doors:hover .gate-door.left {
+            transform: translateX(-5px) rotateY(20deg);
+        }
+        
+        .gate-doors:hover .gate-door.right {
+            transform: translateX(5px) rotateY(-20deg);
+        }
+        
+        /* Kitchen hover effects */
+        .cooking-station, .prep-station, .dish-station {
+            transition: transform 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .cooking-station:hover, .prep-station:hover, .dish-station:hover {
+            transform: scale(1.2);
+            color: #f9b949;
+        }
+        
+        /* Area marker hover effect */
+        .area-marker {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .area-marker:hover {
+            background-color: #d94e4e;
+            transform: scale(1.1);
+        }
+        
+        /* Reception desk hover */
+        .reception-desk {
+            transition: transform 0.3s ease;
+        }
+        
+        .reception-desk:hover {
+            transform: scale(1.05);
+        }
+        
+        .reception-desk:hover .reception-staff,
+        .reception-desk:hover .desk-computer {
+            color: #f9b949;
+        }
+        
+        /* Table selection effect */
+        .table-item-3d.selected {
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(217, 78, 78, 0.4);
+        }
+        
+        .table-item-3d.selected .table-shape {
+            background-color: rgba(217, 78, 78, 0.8);
+        }
+        
+        .table-item-3d.selected .table-info {
+            opacity: 1;
+            transform: translateY(-8px);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Enhanced animations and transitions */
+        @keyframes tableHoverPulse {
+            0% { box-shadow: 0 5px 15px rgba(249, 185, 73, 0.2); transform: translateY(-2px) scale(1.02); }
+            50% { box-shadow: 0 12px 30px rgba(249, 185, 73, 0.6); transform: translateY(-8px) scale(1.08); }
+            100% { box-shadow: 0 5px 15px rgba(249, 185, 73, 0.2); transform: translateY(-2px) scale(1.02); }
+        }
+        
+        @keyframes chairHoverPulse {
+            0% { transform: translateY(-2px) rotate(0deg); }
+            25% { transform: translateY(-4px) rotate(-2deg); }
+            50% { transform: translateY(-6px) rotate(0deg); }
+            75% { transform: translateY(-4px) rotate(2deg); }
+            100% { transform: translateY(-2px) rotate(0deg); }
+        }
+        
+        @keyframes areaMarkerPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes tvScreenGlow {
+            0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(100, 200, 255, 0.7); }
+            100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+        }
+        
+        @keyframes kitchenStationActivity {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-5deg); }
+            50% { transform: scale(1.3) rotate(0deg); }
+            75% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .table-item-3d:hover {
+            animation: tableHoverPulse 2s infinite;
+            z-index: 100;
+        }
+        
+        .table-item-3d:hover .chair {
+            animation: chairHoverPulse 2s infinite;
+        }
+        
+        .area-marker:hover {
+            animation: areaMarkerPulse 1.5s infinite;
+        }
+        
+        .tv-screen:hover {
+            animation: tvScreenGlow 2s infinite;
+        }
+        
+        .cooking-station:hover, .prep-station:hover, .dish-station:hover {
+            animation: kitchenStationActivity 1.5s infinite;
+        }
+        
+        /* 3D perspective enhancement */
+        .floor-plan-3d {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+        
+        .scene {
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center center;
+            transform-style: preserve-3d;
+        }
+        
+        /* Entrance animation for floor plan */
+        @keyframes floorPlanEntrance {
+            0% { transform: translateY(30px) scale(0.9); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        .floor-plan-wrapper {
+            animation: floorPlanEntrance 1.2s ease-out forwards;
+        }
+        
+        /* Table selection animation */
+        @keyframes tableSelect {
+            0% { transform: translateY(-8px) scale(1.1); box-shadow: 0 15px 30px rgba(217, 78, 78, 0.4); }
+            50% { transform: translateY(-12px) scale(1.15); box-shadow: 0 20px 40px rgba(217, 78, 78, 0.6); }
+            100% { transform: translateY(-8px) scale(1.1); box-shadow: 0 15px 30px rgba(217, 78, 78, 0.4); }
+        }
+        
+        .table-item-3d.selected {
+            animation: tableSelect 3s infinite;
+        }
+        
+        /* Improved interactive elements */
+        /* Bar counter glow */
+        @keyframes barCounterGlow {
+            0% { box-shadow: inset 0 0 10px rgba(249, 185, 73, 0.2); }
+            50% { box-shadow: inset 0 0 30px rgba(249, 185, 73, 0.7); }
+            100% { box-shadow: inset 0 0 10px rgba(249, 185, 73, 0.2); }
+        }
+        
+        .bar-counter:hover .bar-surface {
+            animation: barCounterGlow 2s infinite;
+        }
+        
+        /* Door animation enhancement */
+        @keyframes doorSwingLeft {
+            0% { transform: translateX(0) rotateY(0deg); }
+            50% { transform: translateX(-15px) rotateY(30deg); }
+            100% { transform: translateX(0) rotateY(0deg); }
+        }
+        
+        @keyframes doorSwingRight {
+            0% { transform: translateX(0) rotateY(0deg); }
+            50% { transform: translateX(15px) rotateY(-30deg); }
+            100% { transform: translateX(0) rotateY(0deg); }
+        }
+        
+        .gate-doors:hover .gate-door.left {
+            animation: doorSwingLeft 2s infinite;
+        }
+        
+        .gate-doors:hover .gate-door.right {
+            animation: doorSwingRight 2s infinite;
+        }
+        
+        /* Reception desk activity */
+        @keyframes receptionActivity {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .reception-staff:hover, .desk-computer:hover {
+            animation: receptionActivity 1s infinite;
+            color: #f9b949;
+        }
+        
+        /* Area highlighting on filter selection */
+        @keyframes areaHighlight {
+            0% { background-color: rgba(249, 185, 73, 0.0); }
+            50% { background-color: rgba(249, 185, 73, 0.1); }
+            100% { background-color: rgba(249, 185, 73, 0.0); }
+        }
+        
+        .area-filter-btn.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            animation: areaHighlight 2s infinite;
+            z-index: -1;
+        }
+        
+        /* Area filter buttons */
+        .area-filter-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .area-filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #d94e4e;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .area-filter-btn:hover::after,
+        .area-filter-btn.active::after {
+            transform: scaleX(1);
+        }
+        
+        .area-filter-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Floor plan scene transition */
+        .scene {
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center center;
+        }
+        
+        /* Control buttons hover effect */
+        .floor-control-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .floor-control-btn:hover {
+            background-color: #d94e4e;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Selection feedback styling */
+        #selection-feedback {
+            background-color: rgba(249, 185, 73, 0.9);
+            color: #222;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        #selection-feedback.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        
+        /* Interactive stool animations */
+        @keyframes stoolBounce {
+            0% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-10px) scale(1.1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+            70% { transform: translateY(-8px) scale(1.08); }
+            100% { transform: translateY(0) scale(1); }
+        }
+        
+        .bar-stool:hover {
+            animation: stoolBounce 0.8s ease forwards;
+        }
+        
+        .bar-stool:hover .stool-seat {
+            background-color: #f9b949;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Dynamic floor plan zoom effect */
+        .floor-plan-wrapper:hover .scene {
+            transition: transform 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Better filter button effects */
+        .area-filter-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .area-filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background-color: #d94e4e;
+            transition: all 0.3s ease;
+        }
+        
+        .area-filter-btn:hover::after,
+        .area-filter-btn.active::after {
+            left: 0;
+            width: 100%;
+        }
+        
+        .area-filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* 3D rotation for tables on hover */
+        .table-item-3d {
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .table-item-3d:hover {
+            transform: translateY(-8px) scale(1.08) rotateX(10deg);
+        }
+
+        /* Reservation Styles */
+        .reservation-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--elegant-color);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            font-family: var(--body-font);
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 169, 126, 0.3);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--elegant-color);
+            box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .btn-submit {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-family: var(--body-font);
+            font-weight: 500;
+            color: #121212;
+            background-color: var(--elegant-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--elegant-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .reservation-banner {
+            height: 300px;
+            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-bottom: 3rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .reservation-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.6);
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .banner-content h1 {
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--elegant-color);
+        }
+        
+        .banner-content p {
+            font-family: var(--subheading-font);
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Confirmation section */
+        .confirmation-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: rgba(30, 30, 30, 0.6);
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .confirmation-section h2 {
+            font-family: var(--heading-font);
+            color: var(--elegant-color);
+            margin-bottom: 1rem;
+        }
+        
+        .confirmation-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .confirmation-details {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .confirmation-details p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .detail-label {
+            color: var(--elegant-color);
+            font-weight: 500;
+        }
+        
+        /* Time slots styling */
+        .time-slots-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .time-period {
+            flex: 1;
+        }
+        
+        .time-period h4 {
+            font-family: var(--subheading-font);
+            color: var(--elegant-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .time-slot {
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .time-slot.selected {
+            background-color: rgba(200, 169, 126, 0.2);
+            border-color: var(--elegant-color);
+        }
+        
+        .time-slot:hover {
+            background-color: rgba(200, 169, 126, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .status-indicator.available {
+            background-color: #4caf50;
+        }
+        
+        .status-indicator.limited {
+            background-color: #ff9800;
+        }
+        
+        .status-indicator.unavailable {
+            background-color: #f44336;
+        }
+        
+        @media (max-width: 768px) {
+            .time-slots-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .reservation-banner {
+                height: 250px;
+            }
+            
+            .banner-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .banner-content p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Selection feedback */
+        #selection-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(200, 169, 126, 0.1);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        #selection-feedback.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #tablePreference {
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 169, 126, 0.3);
+            border-radius: 5px;
+            color: #fff;
+            margin-top: 1rem;
+        }
+        
+        #tablePreference option {
+            background-color: #121212;
+        }
+    </style>
+</head>
+<body class="cafe-mode">
+    <!-- Global Header -->
+    <header>
+        <nav>
+            <div class="logo" id="brand-logo">Café Delight</div>
+            <div class="nav-controls">
+                <div class="mode-switcher">
+                    <input type="checkbox" id="mode-toggle">
+                    <label for="mode-toggle" class="mode-toggle-label">
+                        <span class="cafe-label">Café</span>
+                        <span class="toggle-slider"></span>
+                        <span class="restaurant-label">Restaurant</span>
+                    </label>
+                </div>
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="menu-search" placeholder="Search menu..." class="search-input">
+                        <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="reservation.html" class="active">Reservation</a></li>
+                <li><a href="order.html">Order Online</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="reservation-banner">
+                <div class="banner-content">
+                    <h1>Reserve Your Table</h1>
+                    <p>Select your preferred date, time, and seating to reserve your perfect dining experience</p>
+                </div>
+            </div>
+
+            <div class="reservation-container">
+                <h2>Make a Reservation</h2>
+                
+                <form class="reservation-form" id="reservation-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests" class="form-label">Number of Guests</label>
+                            <select id="guests" name="guests" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6">6 People</option>
+                                <option value="7">7 People</option>
+                                <option value="8">8 People</option>
+                                <option value="9+">9+ People</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="date" class="form-label">Reservation Date</label>
+                            <input type="date" id="date" name="date" class="form-control" required min="">
+                        </div>
+                        <div class="form-group">
+                            <label for="occasion" class="form-label">Special Occasion</label>
+                            <select id="occasion" name="occasion" class="form-control">
+                                <option value="">None</option>
+                                <option value="birthday">Birthday</option>
+                                <option value="anniversary">Anniversary</option>
+                                <option value="business">Business Meeting</option>
+                                <option value="date">Date Night</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Preferred Time</label>
+                    
+                    <div class="time-slots-container">
+                        <div class="time-period">
+                            <h4>Lunch</h4>
+                            <div class="time-slots">
+                                <div class="time-slot" data-time="11:00">
+                                    <span class="time">11:00 AM</span>
+                                    <span class="status-indicator available"></span>
+                                </div>
+                                <div class="time-slot" data-time="12:00">
+                                    <span class="time">12:00 PM</span>
+                                    <span class="status-indicator available"></span>
+                                </div>
+                                <div class="time-slot" data-time="13:00">
+                                    <span class="time">1:00 PM</span>
+                                    <span class="status-indicator available"></span>
+                                </div>
+                                <div class="time-slot" data-time="14:00">
+                                    <span class="time">2:00 PM</span>
+                                    <span class="status-indicator available"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="time-period">
+                            <h4>Dinner</h4>
+                            <div class="time-slots">
+                                <div class="time-slot" data-time="17:00">
+                                    <span class="time">5:00 PM</span>
+                                    <span class="status-indicator available"></span>
+                                </div>
+                                <div class="time-slot" data-time="18:00">
+                                    <span class="time">6:00 PM</span>
+                                    <span class="status-indicator limited"></span>
+                                </div>
+                                <div class="time-slot" data-time="19:00">
+                                    <span class="time">7:00 PM</span>
+                                    <span class="status-indicator limited"></span>
+                                </div>
+                                <div class="time-slot" data-time="20:00">
+                                    <span class="time">8:00 PM</span>
+                                    <span class="status-indicator unavailable"></span>
+                                </div>
+                                <div class="time-slot" data-time="21:00">
+                                    <span class="time">9:00 PM</span>
+                                    <span class="status-indicator available"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requests" class="form-label">Special Requests</label>
+                        <textarea id="requests" name="requests" class="form-control" rows="3"></textarea>
+                    </div>
+                    
+                    <div id="selection-feedback">
+                        <p id="selection-text">You've selected Table #5 in the Window View area.</p>
+                        <select id="tablePreference" name="tablePreference">
+                            <option value="">No specific table preference</option>
+                            <option value="window">Window seating</option>
+                            <option value="quiet">Quiet area</option>
+                            <option value="bar">Near the bar</option>
+                            <option value="center">Center of restaurant</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="text-align: center; margin-top: 2rem;">
+                        <button type="submit" class="btn-submit">Reserve Now</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Updated floor plan layout with separate container -->
+            <div class="floor-plan-container">
+                <h2>Restaurant Floor Plan</h2>
+                
+                <!-- Area filter buttons -->
+                <div class="area-filters">
+                    <button class="area-filter-btn active" data-area="all">All Areas</button>
+                    <button class="area-filter-btn" data-area="Window View">Window View</button>
+                    <button class="area-filter-btn" data-area="Main Dining">Main Dining</button>
+                    <button class="area-filter-btn" data-area="Private Corner">Private Corner</button>
+                </div>
+
+                <!-- Floor plan controls -->
+                <div class="floor-plan-controls">
+                    <button class="floor-control-btn" id="rotate-left"><i class="fas fa-undo"></i></button>
+                    <button class="floor-control-btn" id="zoom-in"><i class="fas fa-search-plus"></i></button>
+                    <button class="floor-control-btn" id="zoom-out"><i class="fas fa-search-minus"></i></button>
+                    <button class="floor-control-btn" id="rotate-right"><i class="fas fa-redo"></i></button>
+                    <button class="floor-control-btn" id="reset-view"><i class="fas fa-sync-alt"></i></button>
+                </div>
+
+                <div class="floor-plan-wrapper">
+                    <div class="floor-plan-3d">
+                        <div class="scene">
+                            <!-- Restaurant Layout -->
+                            <div class="restaurant-layout">
+                                <!-- Bar Area -->
+                                <div class="bar">
+                                    <div class="area-marker">Bar</div>
+                                    <div class="bar-counter">
+                                        <div class="bar-surface"></div>
+                                        <div class="bar-front"></div>
+                                        <!-- Bar Stools -->
+                                        <div class="bar-seating">
+                                            <div class="bar-stool hovering">
+                                                <div class="stool-seat"></div>
+                                                <div class="stool-stem"></div>
+                                                <div class="stool-base"></div>
+                                                <div class="stool-footrest"></div>
+                                            </div>
+                                            <div class="bar-stool hovering">
+                                                <div class="stool-seat"></div>
+                                                <div class="stool-stem"></div>
+                                                <div class="stool-base"></div>
+                                                <div class="stool-footrest"></div>
+                                            </div>
+                                            <div class="bar-stool hovering">
+                                                <div class="stool-seat"></div>
+                                                <div class="stool-stem"></div>
+                                                <div class="stool-base"></div>
+                                                <div class="stool-footrest"></div>
+                                            </div>
+                                            <div class="bar-stool hovering">
+                                                <div class="stool-seat"></div>
+                                                <div class="stool-stem"></div>
+                                                <div class="stool-base"></div>
+                                                <div class="stool-footrest"></div>
+                                            </div>
+                                            <div class="bar-stool hovering">
+                                                <div class="stool-seat"></div>
+                                                <div class="stool-stem"></div>
+                                                <div class="stool-base"></div>
+                                                <div class="stool-footrest"></div>
+                                            </div>
+                                            <div class="bar-stool hovering">
+                                                <div class="stool-seat"></div>
+                                                <div class="stool-stem"></div>
+                                                <div class="stool-base"></div>
+                                                <div class="stool-footrest"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Drink Displays -->
+                                    <div class="drink-displays">
+                                        <div class="drink-display left">
+                                            <div class="shelf-unit">
+                                                <div class="shelf"></div>
+                                                <div class="shelf"></div>
+                                                <div class="shelf"></div>
+                                            </div>
+                                            <div class="display-lights">
+                                                <div class="light-beam"></div>
+                                                <div class="light-beam"></div>
+                                            </div>
+                                        </div>
+                                        <div class="drink-display center">
+                                            <div class="shelf-unit">
+                                                <div class="shelf"></div>
+                                                <div class="shelf"></div>
+                                                <div class="shelf"></div>
+                                            </div>
+                                            <div class="display-lights">
+                                                <div class="light-beam"></div>
+                                                <div class="light-beam"></div>
+                                            </div>
+                                        </div>
+                                        <div class="drink-display right">
+                                            <div class="shelf-unit">
+                                                <div class="shelf"></div>
+                                                <div class="shelf"></div>
+                                                <div class="shelf"></div>
+                                            </div>
+                                            <div class="display-lights">
+                                                <div class="light-beam"></div>
+                                                <div class="light-beam"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Bartender Station -->
+                                    <div class="bartender-station">
+                                        <i class="fas fa-glass-martini-alt"></i>
+                                    </div>
+                                </div>
+
+                                <!-- TV/Projection Area -->
+                                <div class="tv-area">
+                                    <div class="area-marker">TV/Projection</div>
+                                    <div class="tv-screen">
+                                        <div class="tv-status"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Window View Area -->
+                                <div class="window-area">
+                                    <div class="area-marker">Window View</div>
+                                    <!-- Window Tables -->
+                                    <div class="table-item-3d" data-table="1" data-status="available" data-area="Window View">
+                                        <div class="table-shape round" data-seats="2">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">1</span>
+                                            <span class="seat-count">2</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="2" data-status="available" data-area="Window View">
+                                        <div class="table-shape round" data-seats="2">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">2</span>
+                                            <span class="seat-count">2</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="3" data-status="available" data-area="Window View">
+                                        <div class="table-shape round" data-seats="2">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">3</span>
+                                            <span class="seat-count">2</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="13" data-status="available" data-area="Window View">
+                                        <div class="table-shape round" data-seats="2">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">4</span>
+                                            <span class="seat-count">2</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="14" data-status="available" data-area="Window View">
+                                        <div class="table-shape round" data-seats="2">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">5</span>
+                                            <span class="seat-count">2</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Entrance Gate -->
+                                <div class="entrance-gate">
+                                    <div class="area-marker">Entrance Gate</div>
+                                    <div class="gate-doors">
+                                        <div class="gate-door left">
+                                            <i class="fas fa-door-open"></i>
+                                        </div>
+                                        <div class="gate-door right">
+                                            <i class="fas fa-door-open"></i>
+                                        </div>
+                                    </div>
+                                    <div class="gate-security">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Security</span>
+                                    </div>
+                                </div>
+
+                                <!-- Reception Area -->
+                                <div class="reception-area">
+                                    <div class="area-marker">Reception</div>
+                                    <div class="reception-desk">
+                                        <div class="desk-counter"></div>
+                                        <div class="reception-staff">
+                                            <i class="fas fa-concierge-bell"></i>
+                                        </div>
+                                        <div class="desk-computer">
+                                            <i class="fas fa-desktop"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Main Dining Area -->
+                                <div class="main-area">
+                                    <div class="area-marker">Main Dining</div>
+                                    <!-- Main Area Tables -->
+                                    <div class="table-item-3d" data-table="4" data-status="available" data-area="Main Dining">
+                                        <div class="table-shape rectangular" data-seats="4">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                            <div class="chair chair-4"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">6</span>
+                                            <span class="seat-count">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="5" data-status="available" data-area="Main Dining">
+                                        <div class="table-shape rectangular" data-seats="4">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                            <div class="chair chair-4"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">7</span>
+                                            <span class="seat-count">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="6" data-status="available" data-area="Main Dining">
+                                        <div class="table-shape rectangular" data-seats="4">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                            <div class="chair chair-4"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">8</span>
+                                            <span class="seat-count">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="7" data-status="available" data-area="Main Dining">
+                                        <div class="table-shape rectangular" data-seats="4">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                            <div class="chair chair-4"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">9</span>
+                                            <span class="seat-count">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="8" data-status="available" data-area="Main Dining">
+                                        <div class="table-shape rectangular" data-seats="4">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                            <div class="chair chair-4"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">10</span>
+                                            <span class="seat-count">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="9" data-status="available" data-area="Main Dining">
+                                        <div class="table-shape rectangular" data-seats="4">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                            <div class="chair chair-4"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">11</span>
+                                            <span class="seat-count">4</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Private Corner -->
+                                <div class="private-area">
+                                    <div class="area-marker">Private Corner</div>
+                                    <!-- Private Area Tables -->
+                                    <div class="table-item-3d" data-table="10" data-status="available" data-area="Private Corner">
+                                        <div class="table-shape round" data-seats="3">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">12</span>
+                                            <span class="seat-count">3</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="11" data-status="available" data-area="Private Corner">
+                                        <div class="table-shape round" data-seats="3">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">13</span>
+                                            <span class="seat-count">3</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-item-3d" data-table="12" data-status="available" data-area="Private Corner">
+                                        <div class="table-shape round" data-seats="3">
+                                            <div class="chair chair-1"></div>
+                                            <div class="chair chair-2"></div>
+                                            <div class="chair chair-3"></div>
+                                        </div>
+                                        <div class="table-info">
+                                            <span class="table-number">14</span>
+                                            <span class="seat-count">3</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Kitchen Area -->
+                                <div class="kitchen-area">
+                                    <div class="area-marker">Kitchen</div>
+                                    <div class="kitchen-counter"></div>
+                                    <div class="kitchen-stations">
+                                        <div class="cooking-station">
+                                            <i class="fas fa-fire"></i>
+                                        </div>
+                                        <div class="prep-station">
+                                            <i class="fas fa-utensils"></i>
+                                        </div>
+                                        <div class="dish-station">
+                                            <i class="fas fa-concierge-bell"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Selection Feedback -->
+                    <div id="selection-feedback" class="hidden">
+                        <p id="selection-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 id="footer-title">Café Delight</h4>
+                <p>123 Cafe Street</p>
+                <p>City, State 12345</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <div id="cafe-hours">
+                    <p>Monday - Friday: 7am - 8pm</p>
+                    <p>Saturday - Sunday: 8am - 9pm</p>
+                </div>
+                <div id="restaurant-hours" style="display: none;">
+                    <p>Monday - Friday: 11am - 10pm</p>
+                    <p>Saturday - Sunday: 10am - 11pm</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get special offers and event updates</p>
+                <form class="footer-subscribe">
+                    <div class="subscribe-container">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Café & Restaurant Delight. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Floor Plan Interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Table selection
+            const tables = document.querySelectorAll('.table-item-3d');
+            const selectionFeedback = document.getElementById('selection-feedback');
+            const selectionText = document.getElementById('selection-text');
+            const tablePreferenceSelect = document.getElementById('tablePreference');
+            
+            // Store selected table
+            let selectedTable = null;
+            
+            // Add event listeners to tables
+            tables.forEach(table => {
+                table.addEventListener('click', function() {
+                    // Remove selection from previously selected table
+                    if (selectedTable) {
+                        selectedTable.classList.remove('selected');
+                    }
+                    
+                    // Toggle selection on the clicked table
+                    if (selectedTable === this) {
+                        selectedTable = null;
+                        selectionFeedback.classList.add('hidden');
+                    } else {
+                        this.classList.add('selected');
+                        selectedTable = this;
+                        
+                        // Display selection feedback
+                        const tableNumber = this.querySelector('.table-number').textContent;
+                        const seatCount = this.querySelector('.seat-count').textContent;
+                        const area = this.getAttribute('data-area');
+                        
+                        selectionText.innerHTML = `<strong>Table ${tableNumber}</strong> selected - ${seatCount} seats in the ${area} area`;
+                        selectionFeedback.classList.remove('hidden');
+                        
+                        // Update form selection based on area
+                        if (area === 'Window View') {
+                            tablePreferenceSelect.value = 'window';
+                        } else if (area === 'Private Corner') {
+                            tablePreferenceSelect.value = 'corner';
+                        } else if (area === 'Main Dining') {
+                            tablePreferenceSelect.value = '';
+                        }
+                    }
+                });
+                
+                // Add hover effects for tables with mouse events
+                table.addEventListener('mouseenter', function() {
+                    if (this !== selectedTable) {
+                        // Add any additional hover effects here if needed
+                    }
+                });
+                
+                table.addEventListener('mouseleave', function() {
+                    if (this !== selectedTable) {
+                        // Reset any additional hover effects here if needed
+                    }
+                });
+            });
+            
+            // Area filtering functionality
+            const areaFilterBtns = document.querySelectorAll('.area-filter-btn');
+            
+            areaFilterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active button
+                    areaFilterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const selectedArea = this.getAttribute('data-area');
+                    
+                    // Filter tables based on area
+                    tables.forEach(table => {
+                        const tableArea = table.getAttribute('data-area');
+                        
+                        if (selectedArea === 'all' || tableArea === selectedArea) {
+                            table.style.opacity = '1';
+                            table.style.pointerEvents = 'auto';
+                        } else {
+                            table.style.opacity = '0.3';
+                            table.style.pointerEvents = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Floor plan controls
+            const rotateLeft = document.getElementById('rotate-left');
+            const rotateRight = document.getElementById('rotate-right');
+            const zoomIn = document.getElementById('zoom-in');
+            const zoomOut = document.getElementById('zoom-out');
+            const resetView = document.getElementById('reset-view');
+            const floorPlanScene = document.querySelector('.scene');
+            
+            let rotation = 0;
+            let scale = 1;
+            
+            rotateLeft.addEventListener('click', function() {
+                rotation -= 15;
+                updateFloorPlanTransform();
+            });
+            
+            rotateRight.addEventListener('click', function() {
+                rotation += 15;
+                updateFloorPlanTransform();
+            });
+            
+            zoomIn.addEventListener('click', function() {
+                scale += 0.1;
+                if (scale > 1.5) scale = 1.5;
+                updateFloorPlanTransform();
+            });
+            
+            zoomOut.addEventListener('click', function() {
+                scale -= 0.1;
+                if (scale < 0.5) scale = 0.5;
+                updateFloorPlanTransform();
+            });
+            
+            resetView.addEventListener('click', function() {
+                rotation = 0;
+                scale = 1;
+                updateFloorPlanTransform();
+            });
+            
+            function updateFloorPlanTransform() {
+                floorPlanScene.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+            }
+        });
+    </script>
+</body>
+</html>

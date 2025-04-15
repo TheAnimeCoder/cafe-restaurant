@@ -1,0 +1,482 @@
+/* Enhanced Dish Slider Styles with !important to override conflicts */
+#dish-slider {
+    position: relative !important;
+    padding: 4rem 2rem !important;
+    background-color: #121212 !important;
+    overflow: hidden !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: 600px !important;
+}
+
+#dish-slider h2 {
+    text-align: center !important;
+    font-size: 2.5rem !important;
+    color: #C8A97E !important;
+    margin-bottom: 3rem !important;
+    text-shadow: 0 0 10px rgba(200, 169, 126, 0.3) !important;
+}
+
+#dish-slider::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(0, 255, 157, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(0, 255, 157, 0.05) 0%, transparent 50%) !important;
+    z-index: 0 !important;
+}
+
+#dish-slider .slider-container {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    z-index: 1 !important;
+    height: 450px !important;
+    perspective: 2000px !important;
+    overflow: visible !important;
+    padding-bottom: 50px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#dish-slider .slider-track {
+    position: relative !important;
+    height: 100% !important;
+    width: 100% !important;
+    transform-style: preserve-3d !important;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    padding: 20px 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#dish-slider .slider-item {
+    position: relative !important;
+    width: 350px !important;
+    height: 400px !important;
+    flex: 0 0 auto !important;
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) rotateX(0) !important;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    pointer-events: auto !important;
+    transform-style: preserve-3d !important;
+    display: block !important;
+    visibility: visible !important;
+    will-change: transform, opacity !important;
+    margin: 0 10px !important;
+    perspective: 1000px !important;
+}
+
+#dish-slider .slider-item.active {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) rotateX(0) !important;
+    pointer-events: auto !important;
+    z-index: 2 !important;
+    animation: float 3s ease-in-out infinite alternate;
+}
+
+#dish-slider .slider-item.prev {
+    opacity: 0.5 !important;
+    transform: translateY(-50px) scale(0.9) rotateX(-5deg) translateZ(-100px) !important;
+    z-index: 1 !important;
+}
+
+#dish-slider .slider-item.next {
+    opacity: 0.5 !important;
+    transform: translateY(50px) scale(0.9) rotateX(5deg) translateZ(-100px) !important;
+    z-index: 1 !important;
+}
+
+#dish-slider .slider-content {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+    background-color: #242424 !important;
+    transform-style: preserve-3d !important;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    position: relative !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#dish-slider .slider-item:hover .slider-content {
+    transform: translateZ(50px) rotateX(-5deg) scale(1.05);
+    box-shadow: 0 30px 60px rgba(200, 169, 126, 0.4);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#dish-slider .slider-image {
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+#dish-slider .slider-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+    z-index: 1;
+    pointer-events: none;
+    transition: background 0.5s ease;
+}
+
+#dish-slider .slider-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateZ(10px);
+    display: block;
+    position: relative;
+    z-index: 0;
+}
+
+#dish-slider .slider-item:hover .slider-image img {
+    transform: scale(1.1) translateZ(30px);
+}
+
+#dish-slider .slider-info {
+    padding: 2rem;
+    background: linear-gradient(to top, #242424, transparent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateZ(30px);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#dish-slider .slider-item:hover .slider-info {
+    transform: translateZ(50px) translateY(-10px);
+}
+
+#dish-slider .slider-info h3 {
+    color: #C8A97E;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px rgba(200, 169, 126, 0.3);
+    transform: translateZ(10px);
+}
+
+#dish-slider .slider-info p {
+    color: #f5f5f5;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    transform: translateZ(5px);
+}
+
+#dish-slider .slider-info .price {
+    color: #C8A97E;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px rgba(200, 169, 126, 0.3);
+    transform: translateZ(15px);
+}
+
+#dish-slider .slider-dots {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+    padding: 8px 15px;
+    background-color: rgba(18, 18, 18, 0.7);
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#dish-slider .slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(200, 169, 126, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateZ(20px);
+    border: 1px solid rgba(200, 169, 126, 0.5);
+}
+
+#dish-slider .slider-dot:hover {
+    background-color: rgba(200, 169, 126, 0.8);
+    transform: translateZ(30px) scale(1.2);
+}
+
+#dish-slider .slider-dot.active {
+    background-color: #C8A97E;
+    transform: translateZ(40px) scale(1.2);
+    box-shadow: 0 0 10px rgba(200, 169, 126, 0.8);
+    border: 1px solid #C8A97E;
+}
+
+#dish-slider .slider-controls {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+#dish-slider .slider-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(18, 18, 18, 0.8);
+    border: 2px solid #C8A97E;
+    color: #C8A97E;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    transform: translateZ(30px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
+    opacity: 0.8;
+}
+
+#dish-slider .slider-btn:hover {
+    background-color: #C8A97E;
+    color: #121212;
+    transform: translateZ(50px) scale(1.1);
+    box-shadow: 0 0 15px rgba(200, 169, 126, 0.5);
+    opacity: 1;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(1) rotateX(0);
+    }
+    100% {
+        transform: translateY(-10px) scale(1.01) rotateX(-2deg);
+    }
+}
+
+#dish-slider .slider-item.active .slider-content {
+    animation: float 3s ease-in-out infinite alternate;
+}
+
+/* Slider Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes floatAnimation {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced Slider Styles */
+.seasonal-slider {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.seasonal-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.seasonal-card {
+    animation: scaleIn 0.5s ease;
+    transition: all 0.3s ease;
+}
+
+.seasonal-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.seasonal-badge {
+    animation: fadeIn 0.5s ease 0.2s backwards;
+}
+
+.card-content {
+    animation: slideIn 0.5s ease 0.3s backwards;
+}
+
+.banner-slide {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.banner-content h3,
+.banner-content p {
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.banner-content h3 {
+    animation-delay: 0.3s;
+}
+
+.banner-content p {
+    animation-delay: 0.5s;
+}
+
+.banner-btn {
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.7s forwards;
+}
+
+.nav-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Hover Effects */
+.seasonal-card .card-image img {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.seasonal-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.dot {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dot.active {
+    transform: scale(1.2);
+}
+
+/* Floating Animation for Seasonal Items */
+.seasonal-card[data-season="spring"]:hover {
+    animation: floatAnimation 3s ease-in-out infinite;
+}
+
+.seasonal-card[data-season="summer"]:hover {
+    animation: floatAnimation 3.2s ease-in-out infinite;
+}
+
+.seasonal-card[data-season="autumn"]:hover {
+    animation: floatAnimation 3.4s ease-in-out infinite;
+}
+
+.seasonal-card[data-season="winter"]:hover {
+    animation: floatAnimation 3.6s ease-in-out infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #dish-slider .slider-container {
+        height: 500px;
+    }
+
+    #dish-slider .slider-item {
+        height: 300px;
+    }
+
+    #dish-slider .slider-info {
+        padding: 1.5rem;
+    }
+
+    #dish-slider .slider-info h3 {
+        font-size: 1.2rem;
+    }
+
+    #dish-slider .slider-info p {
+        font-size: 0.9rem;
+    }
+
+    #dish-slider .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .seasonal-card {
+        flex: 0 0 280px;
+    }
+    
+    .banner-content h3 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .seasonal-card {
+        flex: 0 0 260px;
+    }
+    
+    .banner-content h3 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+    .seasonal-card:hover {
+        transform: none;
+    }
+    
+    .seasonal-card[data-season]:hover {
+        animation: none;
+    }
+}

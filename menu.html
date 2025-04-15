@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Café Delight</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="elegant-theme.css">
+    <link rel="stylesheet" href="dish-slider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <style>
+        /* Navigation styling */
+        header {
+            background: linear-gradient(to right, #0d0d0d, #1a1a1a);
+            box-shadow: 0 3px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(249,185,73,0.2);
+        }
+        
+        /* Base styling for elegant dark theme */
+        body {
+            background-color: #151515;
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f9b949;
+            margin-right: 3.5rem;
+            flex-shrink: 0;
+            letter-spacing: 1px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(249,185,73,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, #f9b949, transparent);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.2rem;
+            margin-left: auto;
+        }
+        
+        .nav-links li {
+            position: relative;
+        }
+        
+        .nav-links li a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #f8f8f8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.7rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links li a:hover, 
+        .nav-links li a.active {
+            color: #f9b949;
+        }
+        
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #f9b949, transparent);
+            transition: width 0.4s cubic-bezier(0.58, 0.3, 0.005, 1);
+        }
+        
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links li a.active {
+            font-weight: 600;
+        }
+        
+        .search-container {
+            margin-left: 2.5rem;
+            position: relative;
+        }
+        
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            border-radius: 50px;
+            padding: 0.3rem 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .search-wrapper:focus-within {
+            background-color: rgba(255,255,255,0.15);
+            box-shadow: 0 0 15px rgba(249,185,73,0.2);
+            border-color: rgba(249,185,73,0.3);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            width: 180px;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: #f9b949;
+            cursor: pointer;
+            padding: 0.4rem;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .cart-icon {
+            position: relative;
+            margin-left: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .cart-icon:hover {
+            transform: translateY(-2px);
+        }
+        
+        .cart-icon a {
+            font-size: 1.3rem;
+            color: #f8f8f8;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .cart-icon a:hover {
+            color: #f9b949;
+            background-color: rgba(255,255,255,0.15);
+            border-color: rgba(249,185,73,0.3);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #f9b949, #d94e4e);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(217,78,78,0.3);
+        }
+        
+        /* Mobile menu button - hidden by default */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #f8f8f8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: auto;
+            transition: color 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .menu-toggle:hover {
+            color: #f9b949;
+            background-color: rgba(255,255,255,0.15);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .search-container {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1a1a1a;
+                padding: 1.5rem 0;
+                text-align: center;
+                z-index: 1000;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                border-top: 1px solid rgba(249,185,73,0.1);
+                border-bottom: 1px solid rgba(249,185,73,0.1);
+                gap: 1.2rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li a {
+                padding: 0.8rem 0;
+                font-size: 1rem;
+                display: block;
+            }
+            
+            .logo {
+                margin-right: 0;
+                font-size: 1.8rem;
+            }
+            
+            nav {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .cart-icon a {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .menu-toggle {
+                width: 36px;
+                height: 36px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Café Delight</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html" class="active">Menu</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="order.html">Order Online</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="menu-search" placeholder="Search menu items..." class="search-input">
+                    <button type="button" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-results" id="search-results"></div>
+            </div>
+            <div class="cart-icon">
+                <a href="#" id="cart-toggle">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div class="page-banner">
+        <div class="banner-content">
+            <h1>Our Menu</h1>
+            <p>Discover our culinary creations crafted with passion</p>
+        </div>
+    </div>
+
+    <section id="menu-filter">
+        <div class="container">
+            <div class="menu-tabs">
+                <button class="menu-tab active" data-filter="all">All</button>
+                <button class="menu-tab" data-filter="starters">Starters</button>
+                <button class="menu-tab" data-filter="mains">Mains</button>
+                <button class="menu-tab" data-filter="desserts">Desserts</button>
+                <button class="menu-tab" data-filter="drinks">Drinks</button>
+            </div>
+            <div class="diet-filter">
+                <span>Dietary Preference:</span>
+                <button class="diet-btn active" data-diet="all">All</button>
+                <button class="diet-btn" data-diet="veg">Vegetarian</button>
+                <button class="diet-btn" data-diet="non-veg">Non-Vegetarian</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu-section">
+        <div class="container">
+            <div class="menu-category" data-category="starters">
+                <h2 class="menu-category-title">Starters</h2>
+                <div class="menu-items-container">
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1546039907-5d9764d2860e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Bruschetta">
+                            <div class="menu-item-indicator"></div>
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Bruschetta</h3>
+                                <span class="menu-item-price">₹675</span>
+                            </div>
+                            <p class="menu-item-description">Toasted artisan bread with tomatoes, basil, and olive oil</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1610057366141-83de3f9cbe0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Truffle Fries">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Truffle Fries</h3>
+                                <span class="menu-item-price">₹975</span>
+                            </div>
+                            <p class="menu-item-description">Hand-cut potatoes with truffle oil and parmesan</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Popular</span>
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-type="non-veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1607117121148-2028644073b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Caesar Salad">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Caesar Salad</h3>
+                                <span class="menu-item-price">₹900</span>
+                            </div>
+                            <p class="menu-item-description">Romaine lettuce with house-made dressing and croutons</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Classic</span>
+                                    <span class="menu-item-tag">Non-Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category" data-category="mains">
+                <h2 class="menu-category-title">Main Course</h2>
+                <div class="menu-items-container">
+                    <div class="menu-item" data-type="non-veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ribeye Steak">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Ribeye Steak</h3>
+                                <span class="menu-item-price">₹2,625</span>
+                            </div>
+                            <p class="menu-item-description">Aged ribeye with truffle mashed potatoes</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Signature</span>
+                                    <span class="menu-item-tag">Non-Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Truffle Pasta">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Truffle Pasta</h3>
+                                <span class="menu-item-price">₹2,025</span>
+                            </div>
+                            <p class="menu-item-description">Pappardelle with creamy truffle sauce and mushrooms</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-type="non-veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1548675383-5ca0fb5dbfbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Grilled Salmon">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Grilled Salmon</h3>
+                                <span class="menu-item-price">₹1,875</span>
+                            </div>
+                            <p class="menu-item-description">Wild-caught salmon with saffron risotto</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Seafood</span>
+                                    <span class="menu-item-tag">Non-Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category" data-category="desserts">
+                <h2 class="menu-category-title">Desserts</h2>
+                <div class="menu-items-container">
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1615478503562-ec2d8aa0e24e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Chocolate Lava Cake">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Chocolate Lava Cake</h3>
+                                <span class="menu-item-price">₹750</span>
+                            </div>
+                            <p class="menu-item-description">Warm chocolate cake with a molten center, served with vanilla ice cream</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1551059429-99854e8cd219?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Tiramisu">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Tiramisu</h3>
+                                <span class="menu-item-price">₹675</span>
+                            </div>
+                            <p class="menu-item-description">Italian dessert with coffee and mascarpone</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category" data-category="drinks">
+                <h2 class="menu-category-title">Drinks</h2>
+                <div class="menu-items-container">
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Signature Cocktail">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Signature Cocktail</h3>
+                                <span class="menu-item-price">₹975</span>
+                            </div>
+                            <p class="menu-item-description">Our house special cocktail with premium spirits and fresh ingredients</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Alcoholic</span>
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-type="veg">
+                        <div class="menu-item-image">
+                            <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Wine Selection">
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">Wine Selection</h3>
+                                <span class="menu-item-price">₹750 - ₹1,875</span>
+                            </div>
+                            <p class="menu-item-description">Curated selection of fine wines from around the world</p>
+                            <div class="menu-item-footer">
+                                <div class="menu-item-tags">
+                                    <span class="menu-item-tag">Alcoholic</span>
+                                    <span class="menu-item-tag">Veg</span>
+                                </div>
+                                <button class="menu-item-action">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="specials-section">
+        <div class="container">
+            <h2 class="section-title">Today's Specials</h2>
+            <div class="specials-grid">
+                <div class="special-item">
+                    <div class="special-image">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Beef Wellington">
+                    </div>
+                    <div class="special-content">
+                        <h3>Beef Wellington</h3>
+                        <p>Prime beef with mushroom duxelles in puff pastry</p>
+                        <div class="special-price">₹2,950</div>
+                        <button class="btn order-btn">Order Now</button>
+                    </div>
+                </div>
+                <div class="special-item">
+                    <div class="special-image">
+                        <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Mushroom Risotto">
+                    </div>
+                    <div class="special-content">
+                        <h3>Mushroom Risotto</h3>
+                        <p>Creamy Arborio rice with wild mushrooms and parmesan</p>
+                        <div class="special-price">₹1,650</div>
+                        <button class="btn order-btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>123 Cafe Street</p>
+                <p>City, State 12345</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <p>Monday - Friday: 11am - 10pm</p>
+                <p>Saturday - Sunday: 10am - 11pm</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get special offers and event updates</p>
+                <form class="footer-subscribe">
+                    <div class="subscribe-container">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cafe Delight. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Your Order</h2>
+            <div class="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-summary">
+                <div class="subtotal">
+                    <span>Subtotal:</span>
+                    <span class="subtotal-amount">₹0.00</span>
+                </div>
+                <div class="tax">
+                    <span>Tax (10%):</span>
+                    <span class="tax-amount">₹0.00</span>
+                </div>
+                <div class="total">
+                    <span>Total:</span>
+                    <span class="total-amount">₹0.00</span>
+                </div>
+            </div>
+            <button class="btn primary checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize menu filters
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuTabs = document.querySelectorAll('.menu-tab');
+            const dietBtns = document.querySelectorAll('.diet-btn');
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            // Filter by meal type
+            menuTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    menuTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to current tab
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Show/hide categories based on filter
+                    if (filter === 'all') {
+                        document.querySelectorAll('.menu-category').forEach(cat => {
+                            cat.style.display = 'block';
+                        });
+                    } else {
+                        document.querySelectorAll('.menu-category').forEach(cat => {
+                            if (cat.getAttribute('data-category') === filter) {
+                                cat.style.display = 'block';
+                            } else {
+                                cat.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Filter by diet preference
+            dietBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all diet buttons
+                    dietBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to current button
+                    this.classList.add('active');
+                    
+                    const diet = this.getAttribute('data-diet');
+                    
+                    // Show/hide menu items based on diet filter
+                    menuItems.forEach(item => {
+                        if (diet === 'all' || item.getAttribute('data-type') === diet) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('menu-toggle').addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html> 

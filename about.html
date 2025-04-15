@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Café & Restaurant Delight</title>
+    <!-- Consolidated CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="elegant-theme.css">
+    <link rel="stylesheet" href="dish-slider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Consolidated fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add proper spacing for fixed header */
+        .page-banner, .main-content, #about-content, main {
+            margin-top: 80px;
+        }
+        
+        /* Ensure the header is fixed */
+        header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 1000 !important;
+        }
+        
+        /* Dark elegant theme */
+        body {
+            background-color: #151515;
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation improvements */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #f9b949;
+            text-shadow: 0 0 10px rgba(249, 185, 73, 0.3);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: #f9b949;
+            background-color: rgba(249, 185, 73, 0.1);
+        }
+        
+        .search-container {
+            position: relative;
+            margin-left: 1rem;
+        }
+        
+        .search-wrapper {
+            display: flex;
+            background-color: #1a1a1a;
+            border-radius: 50px;
+            padding: 0.3rem;
+            border: 1px solid #333;
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1rem;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-btn {
+            background-color: #f9b949;
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background-color: #e5a93d;
+            transform: scale(1.05);
+        }
+        
+        .cart-icon {
+            margin-left: 1rem;
+        }
+        
+        .cart-icon a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #f9b949;
+            color: #000;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page banner */
+        .page-banner {
+            position: relative;
+            height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1560053608-13721e0de636?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 3rem;
+        }
+        
+        .banner-content {
+            max-width: 1000px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        
+        .banner-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #f9b949, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 0.8s ease;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .banner-content h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #f9b949, #e0e0e0);
+        }
+        
+        /* Story section */
+        .story-section {
+            padding: 5rem 0;
+            background-color: #151515;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #f9b949;
+            position: relative;
+            letter-spacing: 2px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #f9b949, #e0e0e0);
+        }
+        
+        .story-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #f9b949;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .story-card h3 {
+            color: #f9b949;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .story-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        /* Parallax section */
+        .parallax-section {
+            position: relative;
+            height: 50vh;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .parallax-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .parallax-content {
+            z-index: 1;
+            padding: 0 20px;
+            max-width: 1000px;
+        }
+        
+        .parallax-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f9b949;
+            letter-spacing: 2px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .parallax-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #e0e0e0;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        /* Team section */
+        .team-section {
+            padding: 5rem 0;
+            background-color: #0f0f0f;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .team-member img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 3px solid #f9b949;
+        }
+        
+        .team-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 30px 20px;
+            color: white;
+            transform: translateY(70%);
+            transition: transform 0.4s ease;
+        }
+        
+        .team-member:hover .team-info {
+            transform: translateY(0);
+        }
+        
+        .team-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #f9b949;
+        }
+        
+        .team-info .position {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .team-info p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .team-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .team-social a {
+            color: #f9b949;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .team-social a:hover {
+            color: white;
+        }
+        
+        /* Values section styling */
+        .values-section {
+            background-color: #1a1a1a;
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .values-section::before,
+        .values-section::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 30px;
+        }
+        
+        .values-section::before {
+            top: 0;
+            background: linear-gradient(to top right, transparent 49%, #151515 50%);
+        }
+        
+        .values-section::after {
+            bottom: 0;
+            background: linear-gradient(to bottom right, transparent 49%, #151515 50%);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .value-card {
+            background-color: #222;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .value-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #222, #f9b949);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .value-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #f9b949;
+        }
+        
+        .value-card p {
+            color: #c0c0c0;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* Stats section styling */
+        .stats-section {
+            background-color: #222;
+            padding: 5rem 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-counter {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #222, #f9b949);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #e0e0e0;
+        }
+        
+        /* Testimonials section styling */
+        .testimonials-section {
+            background-color: #151515;
+            padding: 6rem 0;
+        }
+        
+        .testimonial-slider {
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .testimonial-item {
+            background-color: #222;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid #333;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+            color: #c0c0c0;
+            line-height: 1.8;
+        }
+        
+        .testimonial-content::before,
+        .testimonial-content::after {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #f9b949;
+            opacity: 0.5;
+            position: absolute;
+        }
+        
+        .testimonial-content::before {
+            top: -1.5rem;
+            left: -0.5rem;
+        }
+        
+        .testimonial-content::after {
+            bottom: -3rem;
+            right: -0.5rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 2px solid #f9b949;
+        }
+        
+        .author-info h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #f9b949;
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info .author-role {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 992px) {
+            .team-grid, 
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+            
+            .banner-content h1 {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-grid, 
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .banner-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .parallax-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .story-card {
+                padding: 2rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: #0f0f0f;
+                padding: 1rem 0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="cafe-mode">
+    <header>
+        <nav>
+            <div class="logo" id="brand-logo">Café Delight</div>
+            <div class="nav-controls">
+                <div class="mode-switcher">
+                    <input type="checkbox" id="mode-toggle">
+                    <label for="mode-toggle" class="mode-toggle-label">
+                        <span class="cafe-label">Café</span>
+                        <span class="toggle-slider"></span>
+                        <span class="restaurant-label">Restaurant</span>
+                    </label>
+                </div>
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="menu-search" placeholder="Search menu..." class="search-input">
+                        <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="order.html">Order Online</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li class="cart-icon">
+                    <a href="#" id="cart-toggle">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-banner">
+        <div class="banner-content">
+            <h1>About Café Delight</h1>
+            <p>Our story, our passion, our journey to create the perfect dining experience</p>
+        </div>
+    </div>
+
+    <section class="story-section">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="story-card">
+                <h3>A Culinary Journey</h3>
+                <p>Founded in 2010, Café Delight began as a small family bistro with a simple mission: serve exquisite food made with love and passion. What started as a humble establishment has evolved into one of the city's most beloved dining destinations, without ever compromising on our founding principles of quality, creativity, and hospitality.</p>
+                <p>Our Chef and founder, Isabella Martinez, brought her culinary expertise from years of training in Paris and Milan to create a menu that blends international techniques with local flavors. Each dish tells a story of tradition, innovation, and meticulous attention to detail.</p>
+            </div>
+            
+            <div class="story-card">
+                <h3>Our Culinary Philosophy</h3>
+                <p>At Café Delight, we believe that great food comes from great ingredients. We source locally whenever possible, building relationships with farmers and producers who share our commitment to sustainability and quality. Our menu changes with the seasons, ensuring that each dish showcases the finest ingredients at their peak.</p>
+                <p>We don't just serve meals; we create experiences. Every aspect of our restaurant, from the thoughtfully designed interior to the carefully curated wine list, is intended to complement and enhance your dining experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="parallax-section" style="background-image: url('https://images.unsplash.com/photo-1571704100607-916bc79cbe7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');">
+        <div class="parallax-content">
+            <h2 class="parallax-title">Crafting Memories Since 2010</h2>
+            <p class="parallax-subtitle">From our kitchen to your table, every dish tells a story of passion and dedication</p>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1566554273541-37a9ca77b91f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Chef Isabella Martinez">
+                    <div class="team-info">
+                        <h3>Isabella Martinez</h3>
+                        <span class="position">Executive Chef & Founder</span>
+                        <p>With over 20 years of culinary experience across Europe, Isabella brings her passion for flavors and techniques to every dish at Café Delight.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Chef Marco Rossi">
+                    <div class="team-info">
+                        <h3>Marco Rossi</h3>
+                        <span class="position">Head Chef</span>
+                        <p>Marco's innovative approach to traditional recipes has become a signature of our menu. His dedication to perfection inspires our entire kitchen team.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Sophia Chen">
+                    <div class="team-info">
+                        <h3>Sophia Chen</h3>
+                        <span class="position">Pastry Chef</span>
+                        <p>Sophia's delicate pastries and desserts add the perfect finishing touch to the Café Delight experience. Her creations are as beautiful as they are delicious.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="James Wilson">
+                    <div class="team-info">
+                        <h3>James Wilson</h3>
+                        <span class="position">Sommelier</span>
+                        <p>James's extensive knowledge of wines ensures the perfect pairing for every dish. His recommendations have become a highlight for our regular guests.</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 id="footer-title">Café Delight</h4>
+                <p>123 Cafe Street</p>
+                <p>City, State 12345</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <div id="cafe-hours">
+                    <p>Monday - Friday: 7am - 8pm</p>
+                    <p>Saturday - Sunday: 8am - 9pm</p>
+                </div>
+                <div id="restaurant-hours" style="display: none;">
+                    <p>Monday - Friday: 11am - 10pm</p>
+                    <p>Saturday - Sunday: 10am - 11pm</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get special offers and event updates</p>
+                <form class="footer-subscribe">
+                    <div class="subscribe-container">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Café & Restaurant Delight. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('.scroll-btn').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Testimonial carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.dot');
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => testimonial.style.display = 'none');
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            testimonials[index].style.display = 'block';
+            dots[index].classList.add('active');
+            currentTestimonial = index;
+        }
+        
+        // Initialize
+        showTestimonial(0);
+        
+        // Click event for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showTestimonial(index);
+            });
+        });
+        
+        // Auto rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }, 6000);
+    </script>
+</body>
+</html>

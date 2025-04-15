@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="elegant-theme.css">
+    <link rel="stylesheet" href="dish-slider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    
+    <!-- Critical CSS loaded first -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="elegant-theme.css">
+    
+    <!-- Prefetch for 3D models -->
+    <link rel="prefetch" href="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+    
+    <!-- Defer non-critical resources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- Defer model-viewer loading to improve initial page load -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js" defer></script>
+    
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80">
+    
+    <style>
+        /* Navigation styling */
+        header {
+            background: linear-gradient(to right, #0d0d0d, #1a1a1a);
+            box-shadow: 0 3px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(249,185,73,0.2);
+        }
+        
+        /* Base styling for elegant dark theme */
+        body {
+            background-color: #151515;
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f9b949;
+            margin-right: 3.5rem;
+            flex-shrink: 0;
+            letter-spacing: 1px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(249,185,73,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, #f9b949, transparent);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.2rem;
+            margin-left: auto;
+        }
+        
+        .nav-links li {
+            position: relative;
+        }
+        
+        .nav-links li a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #f8f8f8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.7rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links li a:hover, 
+        .nav-links li a.active {
+            color: #f9b949;
+        }
+        
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #f9b949, transparent);
+            transition: width 0.4s cubic-bezier(0.58, 0.3, 0.005, 1);
+        }
+        
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links li a.active {
+            font-weight: 600;
+        }
+        
+        .search-container {
+            margin-left: 2.5rem;
+            position: relative;
+        }
+        
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.08);
+            border-radius: 50px;
+            padding: 0.3rem 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .search-wrapper:focus-within {
+            background-color: rgba(255,255,255,0.15);
+            box-shadow: 0 0 15px rgba(249,185,73,0.2);
+            border-color: rgba(249,185,73,0.3);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            width: 180px;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: #f9b949;
+            cursor: pointer;
+            padding: 0.4rem;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .cart-icon {
+            position: relative;
+            margin-left: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .cart-icon:hover {
+            transform: translateY(-2px);
+        }
+        
+        .cart-icon a {
+            font-size: 1.3rem;
+            color: #f8f8f8;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .cart-icon a:hover {
+            color: #f9b949;
+            background-color: rgba(255,255,255,0.15);
+            border-color: rgba(249,185,73,0.3);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #f9b949, #d94e4e);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(217,78,78,0.3);
+        }
+        
+        /* Mobile menu button - hidden by default */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #f8f8f8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: auto;
+            transition: color 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .menu-toggle:hover {
+            color: #f9b949;
+            background-color: rgba(255,255,255,0.15);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .search-container {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1a1a1a;
+                padding: 1.5rem 0;
+                text-align: center;
+                z-index: 1000;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                border-top: 1px solid rgba(249,185,73,0.1);
+                border-bottom: 1px solid rgba(249,185,73,0.1);
+                gap: 1.2rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li a {
+                padding: 0.8rem 0;
+                font-size: 1rem;
+                display: block;
+            }
+            
+            .logo {
+                margin-right: 0;
+                font-size: 1.8rem;
+            }
+            
+            nav {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .cart-icon a {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .menu-toggle {
+                width: 36px;
+                height: 36px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Café Delight</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="order.html">Order Online</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="menu-search" placeholder="Search menu items..." class="search-input">
+                    <button type="button" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-results" id="search-results"></div>
+            </div>
+            <div class="cart-icon">
+                <a href="#" id="cart-toggle">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Existing content will continue here but is omitted for brevity -->
+    
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 id="footer-title">Café Delight</h4>
+                <p>123 Cafe Street</p>
+                <p>City, State 12345</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <div id="cafe-hours">
+                    <p>Monday - Friday: 7am - 8pm</p>
+                    <p>Saturday - Sunday: 8am - 9pm</p>
+                </div>
+                <div id="restaurant-hours" style="display: none;">
+                    <p>Monday - Friday: 11am - 10pm</p>
+                    <p>Saturday - Sunday: 10am - 11pm</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get special offers and event updates</p>
+                <form class="footer-subscribe">
+                    <div class="subscribe-container">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Café & Restaurant Delight. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+    
+    <!-- Video Background Script -->
+    <script src="video-background.js"></script>
+    
+    <!-- Inline script for debugging -->
+    <script>
+        // Debug script to ensure the slider is initialized
+        window.addEventListener('load', function() {
+            console.log('Window loaded, initializing components');
+            
+            // Force initDishSlider to run
+            setTimeout(function() {
+                if (typeof initDishSlider === 'function') {
+                    console.log('Calling initDishSlider directly');
+                    initDishSlider();
+                } else {
+                    console.error('initDishSlider function not found');
+                }
+                
+                // Force dish slider visibility
+                const dishSlider = document.getElementById('dish-slider');
+                if (dishSlider) {
+                    console.log('Dish slider element found, forcing visibility');
+                    dishSlider.style.display = 'block';
+                    dishSlider.style.visibility = 'visible';
+                    dishSlider.style.opacity = '1';
+                    
+                    const sliderItems = dishSlider.querySelectorAll('.slider-item');
+                    console.log('Found ' + sliderItems.length + ' slider items');
+                    
+                    const sliderTrack = dishSlider.querySelector('.slider-track');
+                    if (sliderTrack) {
+                        sliderTrack.style.display = 'flex';
+                        sliderTrack.style.visibility = 'visible';
+                        sliderTrack.style.opacity = '1';
+                        
+                        // Apply initial transform to show first items
+                        sliderTrack.style.transform = 'translateX(0)';
+                        
+                        // Make first items active
+                        const itemsToShow = window.innerWidth < 768 ? 1 : (window.innerWidth < 1024 ? 2 : 3);
+                        sliderItems.forEach((item, idx) => {
+                            if (idx < itemsToShow) {
+                                item.classList.add('active');
+                            } else if (idx >= itemsToShow) {
+                                item.classList.add('next');
+                            }
+                            item.style.opacity = '1';
+                            item.style.visibility = 'visible';
+                        });
+                    }
+                    
+                    // Force controls and dots visibility
+                    const controls = dishSlider.querySelector('.slider-controls');
+                    if (controls) {
+                        controls.style.display = 'flex';
+                        controls.style.visibility = 'visible';
+                        controls.style.opacity = '1';
+                    }
+                    
+                    const dots = dishSlider.querySelector('.slider-dots');
+                    if (dots) {
+                        dots.style.display = 'flex';
+                        dots.style.visibility = 'visible';
+                        dots.style.opacity = '1';
+                        
+                        // Create dots if they don't exist
+                        if (dots.children.length === 0) {
+                            const dotsCount = Math.ceil(sliderItems.length / itemsToShow);
+                            for (let i = 0; i < dotsCount; i++) {
+                                const dot = document.createElement('span');
+                                dot.classList.add('slider-dot');
+                                if (i === 0) dot.classList.add('active');
+                                dots.appendChild(dot);
+                            }
+                        }
+                    }
+                }
+            }, 500);
+        });
+        
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('menu-toggle').addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

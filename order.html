@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Online | Café & Restaurant Delight</title>
+    <!-- Primary Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Order page specific styles */
+        #order-options {
+            background-color: var(--dark-bg);
+            padding: 5rem 0;
+        }
+        
+        #menu-ordering {
+            background-color: #1a1a1a;
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        #cart-summary {
+            background-color: var(--dark-bg);
+            padding: 5rem 0 6rem;
+        }
+        
+        /* Form styling specific to order page */
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #444;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        
+        /* Critical header override for this page */
+        header, 
+        header#header, 
+        body > header, 
+        .header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+            transform: none !important;
+            margin: 0 !important;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        body {
+            padding-top: 80px !important;
+            margin-top: 0 !important;
+        }
+        
+        /* Page-specific margins to account for the fixed header */
+        .page-banner {
+            margin-top: 80px !important;
+        }
+        
+        /* Ensure the header remains fixed at the top */
+        header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 1000 !important;
+        }
+        
+        /* Enhanced visual styling - black elegant theme */
+        body {
+            background-color: #151515;
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .page-banner {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to bottom right, transparent 49%, #151515 50%);
+        }
+        
+        .banner-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease;
+            letter-spacing: 2px;
+        }
+        
+        .banner-content p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.8s ease;
+            letter-spacing: 1px;
+            color: #e0e0e0;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            position: relative;
+            color: #f9b949;
+        }
+        
+        section h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #f9b949, #e0e0e0);
+            margin: 0.8rem auto 0;
+        }
+        
+        /* Seasonal Menu Carousel */
+        .seasonal-carousel {
+            background-color: #1a1a1a;
+            padding: 5rem 0;
+        }
+
+        .season-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .season-btn {
+            background-color: #333;
+            color: #c0c0c0;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .season-btn.active {
+            background: linear-gradient(135deg, #222, #f9b949);
+            color: white;
+        }
+
+        .seasonal-slider-wrapper {
+            position: relative;
+        }
+
+        .seasonal-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .seasonal-card {
+            flex: 0 0 300px;
+            background-color: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid #333;
+        }
+
+        .card-image {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .seasonal-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        .seasonal-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(249, 185, 73, 0.9);
+            color: #222;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin: 0 0 0.8rem;
+            color: #f9b949;
+        }
+
+        .card-content p {
+            color: #c0c0c0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .seasonal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            border: none;
+            color: #f9b949;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .nav-btn:hover {
+            background-color: #f9b949;
+            color: #222;
+        }
+        
+        /* Order form improvements */
+        .order-type-tabs {
+            display: flex;
+            background: #222;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 0 auto 2rem;
+            max-width: 500px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 1px solid #333;
+        }
+        
+        .order-tab {
+            flex: 1;
+            padding: 1.2rem;
+            text-align: center;
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #c0c0c0;
+        }
+        
+        .order-tab.active {
+            background: linear-gradient(135deg, #222, #f9b949);
+            color: white;
+            box-shadow: 0 5px 15px rgba(249,185,73,0.2);
+        }
+        
+        .order-tab:not(.active):hover {
+            background-color: #333;
+            color: #f9b949;
+        }
+        
+        .order-tab i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .delivery-info, .pickup-info {
+            background-color: #222;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+            border: 1px solid #333;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .delivery-info h2, .pickup-info h2 {
+            font-size: 2rem;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: #f9b949;
+        }
+        
+        .delivery-info h2::after, .pickup-info h2::after {
+            margin-left: 0;
+            background: linear-gradient(to right, #f9b949, #555);
+        }
+        
+        /* Menu section improvements */
+        #menu-ordering {
+            background-color: #1a1a1a;
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+            position: relative;
+        }
+        
+        #menu-ordering::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to top right, transparent 49%, #151515 50%);
+        }
+        
+        #menu-ordering::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to bottom right, transparent 49%, #151515 50%);
+        }
+        
+        /* Menu filter improvements */
+        .menu-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #222;
+            padding: 1.2rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 1px solid #333;
+        }
+        
+        .menu-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        
+        .category-btn {
+            border: none;
+            background: none;
+            padding: 0.7rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #c0c0c0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, #222, #f9b949);
+            color: white;
+            box-shadow: 0 5px 15px rgba(249,185,73,0.2);
+        }
+        
+        .category-btn:not(.active):hover {
+            background-color: #333;
+            color: #f9b949;
+        }
+        
+        .dietary-filter {
+            display: flex;
+            align-items: center;
+        }
+        
+        .dietary-filter label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: #c0c0c0;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .dietary-filter label:hover {
+            background-color: #444;
+            color: #f9b949;
+        }
+        
+        .dietary-filter input[type="checkbox"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #f9b949;
+        }
+        
+        /* Menu category heading */
+        .menu-category-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #f9b949;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        
+        .menu-category-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #f9b949, #555);
+        }
+        
+        /* Menu item improvements */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .menu-item {
+            background-color: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            border: 1px solid #333;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .item-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .menu-item:hover .item-image img {
+            transform: scale(1.08);
+        }
+        
+        .veg-indicator, .non-veg-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid;
+            transition: transform 0.3s ease;
+        }
+        
+        .veg-indicator {
+            border-color: #4CAF50;
+        }
+        
+        .non-veg-indicator {
+            border-color: #FF5252;
+        }
+        
+        .menu-item:hover .veg-indicator,
+        .menu-item:hover .non-veg-indicator {
+            transform: scale(1.1);
+        }
+        
+        .veg-indicator i {
+            color: #4CAF50;
+        }
+        
+        .non-veg-indicator i {
+            color: #FF5252;
+        }
+        
+        .item-details {
+            padding: 1.8rem;
+        }
+        
+        .item-details h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            margin: 0 0 0.8rem;
+            color: #f9b949;
+        }
+        
+        .item-details p {
+            color: #c0c0c0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            height: 3em;
+            overflow: hidden;
+        }
+        
+        .item-price-cart {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #f9b949;
+        }
+        
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, #222, #f9b949);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        
+        .add-to-cart-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Cart summary section */
+        #cart-summary {
+            background-color: #151515;
+            padding-top: 5rem;
+            padding-bottom: 6rem;
+        }
+        
+        .summary-container {
+            background-color: #222;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        
+        .summary-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #222, #f9b949);
+        }
+        
+        .summary-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #f9b949;
+        }
+        
+        .cart-items-container {
+            max-height: 350px;
+            overflow-y: auto;
+            margin: 1.5rem 0;
+            padding: 0 10px 10px 0;
+            border-radius: 8px;
+        }
+        
+        .cart-empty-message {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #999;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+        }
+        
+        .cart-empty-message i {
+            font-size: 3.5rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cart-empty-message p {
+            margin: 0.3rem 0;
+        }
+        
+        .cart-empty-message p:first-of-type {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #c0c0c0;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1.3rem;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 1.3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 700;
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .cart-item-price {
+            color: #f9b949;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+        
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #444;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: #c0c0c0;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #f9b949;
+            color: white;
+            border-color: #f9b949;
+        }
+        
+        .quantity-value {
+            width: 30px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+        
+        .cart-item-remove {
+            color: #999;
+            cursor: pointer;
+            margin-left: 1.5rem;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-item-remove:hover {
+            color: #f9b949;
+            background-color: #333;
+            transform: scale(1.1);
+        }
+        
+        .cart-totals {
+            margin-top: 2rem;
+            background-color: #1a1a1a;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+        }
+        
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            color: #c0c0c0;
+        }
+        
+        .total-line span:first-child {
+            font-weight: 600;
+        }
+        
+        .total-line.total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #333;
+        }
+        
+        .checkout-btn {
+            margin-top: 2rem;
+            width: 100%;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .checkout-btn i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .checkout-btn.disabled {
+            background-color: #333;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 992px) {
+            .menu-filter {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-type-tabs {
+                max-width: 100%;
+            }
+            
+            .banner-content h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        /* Featured Items Slider Styles */
+        .featured-slider-section {
+            margin-bottom: 3rem;
+        }
+        
+        .featured-slider-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #f9b949;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        
+        .featured-slider-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #f9b949, #555);
+        }
+        
+        .featured-slider-container {
+            position: relative;
+            padding: 0 50px;
+            margin-bottom: 2rem;
+        }
+        
+        .featured-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .featured-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .featured-slide {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+        }
+        
+        .featured-item {
+            background-color: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            border: 1px solid #333;
+            height: 100%;
+        }
+        
+        .featured-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .featured-image {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .featured-item:hover .featured-image img {
+            transform: scale(1.08);
+        }
+        
+        .featured-details {
+            padding: 1.5rem;
+        }
+        
+        .featured-details h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            margin: 0 0 0.8rem;
+            color: #f9b949;
+        }
+        
+        .featured-details p {
+            color: #c0c0c0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            height: 3em;
+            overflow: hidden;
+        }
+        
+        .featured-price-cart {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        /* Slider Navigation Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            border: none;
+            color: #f9b949;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .slider-arrow:hover {
+            background-color: #f9b949;
+            color: #222;
+        }
+        
+        .prev-arrow {
+            left: 0;
+        }
+        
+        .next-arrow {
+            right: 0;
+        }
+        
+        /* Seasonal Specials Slider Styles */
+        #seasonal-specials {
+            background-color: #151515;
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        #seasonal-specials::before,
+        #seasonal-specials::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 30px;
+        }
+        
+        #seasonal-specials::before {
+            top: 0;
+            background: linear-gradient(to top right, transparent 49%, #1a1a1a 50%);
+        }
+        
+        #seasonal-specials::after {
+            bottom: 0;
+            background: linear-gradient(to bottom right, transparent 49%, #1a1a1a 50%);
+        }
+        
+        .specials-slider-container {
+            position: relative;
+            padding: 0 50px;
+        }
+        
+        .specials-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .specials-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .special-slide {
+            flex: 0 0 400px;
+            scroll-snap-align: start;
+        }
+        
+        .special-offer {
+            background-color: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid #333;
+            height: 100%;
+        }
+        
+        .special-offer.promo {
+            border: 1px solid #f9b949;
+        }
+        
+        .special-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .special-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .special-offer:hover .special-image img {
+            transform: scale(1.08);
+        }
+        
+        .special-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(249, 185, 73, 0.9);
+            color: #222;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .special-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .special-content h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin: 0 0 0.8rem;
+            color: #f9b949;
+        }
+        
+        .special-content p {
+            color: #c0c0c0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .view-special-btn {
+            background: linear-gradient(135deg, #222, #f9b949);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .view-special-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        
+        /* Promotional Banner Slider Styles */
+        #promo-banner-slider {
+            background-color: #121212;
+            padding: 2rem 0;
+        }
+        
+        .banner-slider-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .banner-slider {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .banner-slide {
+            flex: 0 0 100%;
+            position: absolute;
+            transition: transform 0.5s ease;
+        }
+        
+        .banner-slide:nth-child(1) {
+            transform: translateX(0);
+        }
+        
+        .banner-slide:nth-child(2) {
+            transform: translateX(100%);
+        }
+        
+        .banner-slide:nth-child(3) {
+            transform: translateX(200%);
+        }
+        
+        .promo-banner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+        
+        .promo-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .banner-content {
+            max-width: 500px;
+        }
+        
+        .banner-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #f9b949;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .banner-content p {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .banner-btn {
+            display: inline-block;
+            background-color: #f9b949;
+            color: #222;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border: 2px solid #f9b949;
+        }
+        
+        .banner-btn:hover {
+            background-color: transparent;
+            color: #f9b949;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        
+        .banner-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #444;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active,
+        .dot:hover {
+            background-color: #f9b949;
+            transform: scale(1.2);
+        }
+        
+        /* Responsive styles for sliders */
+        @media (max-width: 992px) {
+            .featured-slide, 
+            .special-slide {
+                flex: 0 0 350px;
+            }
+            
+            .banner-content h3 {
+                font-size: 2rem;
+            }
+            
+            .banner-content p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .featured-slide, 
+            .special-slide {
+                flex: 0 0 300px;
+            }
+            
+            .banner-slider {
+                height: 250px;
+            }
+            
+            .promo-banner {
+                height: 250px;
+            }
+            
+            .banner-content h3 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .featured-slide, 
+            .special-slide {
+                flex: 0 0 260px;
+            }
+            
+            .banner-slider {
+                height: 200px;
+            }
+            
+            .promo-banner {
+                height: 200px;
+            }
+            
+            .banner-content h3 {
+                font-size: 1.5rem;
+            }
+            
+            .banner-content p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            
+            .banner-btn {
+                padding: 0.6rem 1.3rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Café and Restaurant Sliders */
+        .slider-section {
+            padding: 4rem 0;
+            background-color: #1a1a1a;
+        }
+
+        .slider-container {
+            position: relative;
+            padding: 0 50px;
+            margin: 2rem 0;
+        }
+
+        .food-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .food-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slider-item {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+        }
+
+        .item-card {
+            background-color: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease;
+            border: 1px solid #333;
+        }
+
+        .item-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .item-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .item-card:hover .item-image img {
+            transform: scale(1.08);
+        }
+
+        .item-details {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .item-details h4 {
+            font-family: 'Playfair Display', serif;
+            color: #f9b949;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details p {
+            color: #c0c0c0;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .item-price {
+            color: #f9b949;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Show/hide sliders based on mode */
+        body.cafe-mode .restaurant-slider {
+            display: none;
+        }
+
+        body.restaurant-mode .cafe-slider {
+            display: none;
+        }
+
+        body.restaurant-mode .restaurant-slider {
+            display: block;
+        }
+    </style>
+</head>
+<body class="cafe-mode">
+    <!-- Global Header -->
+    <header>
+        <nav>
+            <div class="logo" id="brand-logo">Café Delight</div>
+            <div class="nav-controls">
+                <div class="mode-switcher">
+                    <input type="checkbox" id="mode-toggle">
+                    <label for="mode-toggle" class="mode-toggle-label">
+                        <span class="cafe-label">Café</span>
+                        <span class="toggle-slider"></span>
+                        <span class="restaurant-label">Restaurant</span>
+                    </label>
+                </div>
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="menu-search" placeholder="Search menu..." class="search-input">
+                        <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="order.html" class="active">Order Online</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+               
+            </ul>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+        <div class="banner-content">
+            <h1 class="cafe-heading">Order Online - Café</h1>
+            <h1 class="restaurant-heading" style="display: none;">Order Online - Restaurant</h1>
+            <p class="cafe-description">Fresh pastries, artisan coffee, and light meals delivered to your doorstep</p>
+            <p class="restaurant-description" style="display: none;">Experience fine dining in the comfort of your home</p>
+        </div>
+    </div>
+
+    <!-- New Seasonal Menu Carousel -->
+    <section id="seasonal-menu" class="seasonal-carousel">
+        <div class="container">
+            <h2 class="section-title">Seasonal Highlights</h2>
+            <div class="season-selector">
+                <button class="season-btn active" data-season="spring">Spring</button>
+                <button class="season-btn" data-season="summer">Summer</button>
+                <button class="season-btn" data-season="autumn">Autumn</button>
+                <button class="season-btn" data-season="winter">Winter</button>
+            </div>
+            <div class="seasonal-slider-wrapper">
+                <div class="seasonal-slider">
+                    <div class="seasonal-card" data-season="spring">
+                        <div class="card-image">
+                            <img src="https://source.unsplash.com/800x600/?spring,food" alt="Spring Special">
+                            <div class="seasonal-badge">Spring</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Spring Fresh</h3>
+                            <p>Light and refreshing spring specials</p>
+                        </div>
+                    </div>
+                    <div class="seasonal-card" data-season="summer">
+                        <div class="card-image">
+                            <img src="https://source.unsplash.com/800x600/?summer,food" alt="Summer Special">
+                            <div class="seasonal-badge">Summer</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Summer Delight</h3>
+                            <p>Cool and refreshing summer favorites</p>
+                        </div>
+                    </div>
+                    <div class="seasonal-card" data-season="autumn">
+                        <div class="card-image">
+                            <img src="https://source.unsplash.com/800x600/?autumn,food" alt="Autumn Special">
+                            <div class="seasonal-badge">Autumn</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Autumn Warmth</h3>
+                            <p>Cozy autumn comfort dishes</p>
+                        </div>
+                    </div>
+                    <div class="seasonal-card" data-season="winter">
+                        <div class="card-image">
+                            <img src="https://source.unsplash.com/800x600/?winter,food" alt="Winter Special">
+                            <div class="seasonal-badge">Winter</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Winter Comfort</h3>
+                            <p>Hearty winter specialties</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="seasonal-nav">
+                    <button class="nav-btn prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Café Items Slider -->
+    <section class="slider-section cafe-slider">
+        <div class="container">
+            <h2 class="section-title">Café Specialties</h2>
+            <div class="slider-container">
+                <button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+                <div class="food-slider">
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="cafe/capucinno.jpg" alt="Cappuccino">
+                            </div>
+                            <div class="item-details">
+                                <h4>Cappuccino</h4>
+                                <p>Rich espresso with steamed milk foam</p>
+                                <div class="item-price">₹180</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="cafe/tiramisu.jpg" alt="Tiramisu">
+                            </div>
+                            <div class="item-details">
+                                <h4>Tiramisu</h4>
+                                <p>Classic Italian coffee-flavored dessert</p>
+                                <div class="item-price">₹250</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="cafe/brownies.jpg" alt="Brownies">
+                            </div>
+                            <div class="item-details">
+                                <h4>Chocolate Brownies</h4>
+                                <p>Rich chocolate brownies</p>
+                                <div class="item-price">₹150</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="cafe/cold brew coffee.jpg" alt="Cold Brew">
+                            </div>
+                            <div class="item-details">
+                                <h4>Cold Brew Coffee</h4>
+                                <p>Smooth and refreshing cold brew</p>
+                                <div class="item-price">₹200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Restaurant Items Slider -->
+    <section class="slider-section restaurant-slider" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Restaurant Specialties</h2>
+            <div class="slider-container">
+                <button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+                <div class="food-slider">
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="restaurant/paneer tikka masala.jpg" alt="Paneer Tikka Masala">
+                            </div>
+                            <div class="item-details">
+                                <h4>Paneer Tikka Masala</h4>
+                                <p>Creamy curry with grilled cottage cheese</p>
+                                <div class="item-price">₹280</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="restaurant/naan.jpg" alt="Naan">
+                            </div>
+                            <div class="item-details">
+                                <h4>Butter Naan</h4>
+                                <p>Freshly baked Indian bread</p>
+                                <div class="item-price">₹60</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="restaurant/dosa.jpg" alt="Dosa">
+                            </div>
+                            <div class="item-details">
+                                <h4>Crispy Dosa</h4>
+                                <p>South Indian crispy crepe</p>
+                                <div class="item-price">₹150</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-item">
+                        <div class="item-card">
+                            <div class="item-image">
+                                <img src="restaurant/Kadai Paneer.jpg" alt="Kadai Paneer">
+                            </div>
+                            <div class="item-details">
+                                <h4>Kadai Paneer</h4>
+                                <p>Spicy paneer with bell peppers</p>
+                                <div class="item-price">₹260</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Promotional Banner Slider -->
+    <div class="banner-slider-container">
+        <button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+        <div class="banner-slider">
+            <div class="banner-slide">
+                <div class="promo-banner">
+                    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Free Delivery Promotion">
+                    <div class="banner-overlay">
+                        <div class="banner-content">
+                            <h3>FREE DELIVERY</h3>
+                            <p>On all orders above ₹2000</p>
+                            <a href="#menu-ordering" class="banner-btn">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <div class="promo-banner">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="New Menu Items">
+                    <div class="banner-overlay">
+                        <div class="banner-content">
+                            <h3>NEW MENU ITEMS</h3>
+                            <p>Try our new chef's specials</p>
+                            <a href="#featured-items" class="banner-btn">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <div class="promo-banner">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Happy Hour Promotion">
+                    <div class="banner-overlay">
+                        <div class="banner-content">
+                            <h3>HAPPY HOUR</h3>
+                            <p>30% off on all drinks from 5-7 PM</p>
+                            <a href="#menu-ordering" class="banner-btn">View Drinks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="banner-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+    </div>
+</body>
+</html>
